@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Spark team </title>
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="assets/css/style-starter.css">
+
+  <!-- google fonts -->
+  <link href="http://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <script src="http://code.jquery.com/jquery.js"></script>
+
+
+  <style type="text/css">
+  .container{
+
+    
+    text-align: center;
+   
+  }
+      #front {
+          margin-left: 3px;
+          margin-bottom: 3px;
+           
+      }
+      #rear{
+          margin-top: 3px;
+          margin-left: 3px;
+      }
+      .btn{
+           background: #B0C4DE;
+           color: #000000;
+          }
+
+      .buttom{
+
+        margin-top: 3px;
+        margin-left: -1px;
+        margin-bottom: 3px;
+        text-align: center;
+        
+       
+
+       
+      }
+      .video{
+        /* height: 100px; */
+      }
+     
+  </style>
+
+</head>
+
+
+<body class="sidebar-menu-collapsed">
+    <div class="se-pre-con"></div>
+    <section>
+      <!-- sidebar menu start -->
+      <div class="sidebar-menu sticky-sidebar-menu">
+    
+        <!-- logo start -->
+        <div class="logo">
+          <h1><a href="index.html">Collective</a></h1>
+        </div>
+    
+        <div class="logo-icon text-center">
+          <a href="index.html" title="logo"><img src="assets/images/logo.png" alt="logo-icon"> </a>
+        </div>
+        <!-- //logo end -->
+    
+        <div class="sidebar-menu-inner">
+    
+          <!-- sidebar nav start -->
+          <ul class="nav nav-pills nav-stacked custom-nav">   
+            <li class="menu-list">
+              <a href="#"><i class="fa fa-cogs"></i>
+                <span>Home <i class="lnr lnr-chevron-right"></i></span></a>
+              <ul class="sub-menu-list">
+    
+                <!--//检测案例-->
+                <li><a href="Beidou_satellite_positioning.html">Beidou satellite positioning</a> </li>
+                <li><a href="Video_detection_control.html">Video detection control</a> </li>
+                  
+              </ul>
+            </li>
+            <!--<li><a href="pricing.html"><i class="fa fa-table"></i> <span>Pricing tables</span></a></li>-->
+    
+            <!--项目介绍-->
+            <li><a href="Spark_Team_Project.html"><i class="fa fa-th"></i> <span>Spark team project</span></a></li>
+    
+          </ul>
+          <a class="toggle-btn">
+            <i class="fa fa-angle-double-left menu-collapsed__left"><span>Collapse Sidebar</span></i>
+            <i class="fa fa-angle-double-right menu-collapsed__right"></i>
+          </a>
+    
+        </div>
+      </div>
+
+      <center><h2> <span class="text-primary">Welcome! Video and operation interface</span> </h2></center>
+  
+      <div class="main-content">
+        <div class="container-fluid content-top-gap">
+
+    
+            <div class="welcome-msg pt-3 pb-4">
+     
+      </div>
+      </div>
+      </div>
+
+      <div class="video"><video id="v"></video>
+    <script>
+        !(function () {
+            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
+            if (navigator.mediaDevices === undefined) {
+                navigator.mediaDevices = {};
+            }
+            if (navigator.mediaDevices.getUserMedia === undefined) {
+                navigator.mediaDevices.getUserMedia = function (constraints) {
+                    // 首先，如果有getUserMedia的话，就获得它
+                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
+                    if (!getUserMedia) {
+                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+                    }
+
+                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise
+                    return new Promise(function (resolve, reject) {
+                        getUserMedia.call(navigator, constraints, resolve, reject);
+                    });
+                }
+            }
+            const constraints = {
+                video: true,
+                audio: false
+            };
+            let promise = navigator.mediaDevices.getUserMedia(constraints);
+            promise.then(stream => {
+                let v = document.getElementById('v');
+                // 旧的浏览器可能没有srcObject
+                if ("srcObject" in v) {
+                    v.srcObject = stream;
+                } else {
+                    // 防止再新的浏览器里使用它，应为它已经不再支持了
+                    v.src = window.URL.createObjectURL(stream);
+                }
+                v.onloadedmetadata = function (e) {
+                    v.play();
+                };
+            }).catch(err => {
+                console.error(err.name + ": " + err.message);
+            })
+        })();
+    </script>
+    </div>
+  <hr>
+  
+      <br></br>
+      
+      
+
+  <div class="buttom">
+  
+    <button type="button" class="btn btn-lg btn-primary glyphicon" >
+      <font size="3" >
+      LED/ON
+      </font>
+    </button>
+     <button type="button" class="btn btn-lg btn-primary glyphicon" >
+      <font size="3" >
+      LED/OFF
+    </font>
+    </button>
+
+    <button id='leftRear' class="btn btn-lg btn-primary glyphicon">
+        <font size="3" >
+        back_left
+    </font>
+      </button>
+    </button>
+    <button id='rightRear' class="btn btn-lg btn-primary glyphicon">
+    <font size="3" >
+    back_right
+</font>
+    </button><br></br><button id='up' class="btn btn-lg btn-primary glyphicon">
+      <font size="2" >
+      motor_up
+  </font></button>
+</button><button id='dwon' class="btn btn-lg btn-primary glyphicon">
+  <font size="2" >
+  motor_dwon
+</font></button>
+</button><button id='up' class="btn btn-lg btn-primary glyphicon">
+  <font size="2" >
+    motor_left
+</font></button>
+</button><button id='right' class="btn btn-lg btn-primary glyphicon">
+  <font size="2" >
+    motor_right
+</font></button>
+
+
+
+
+  
+
+       
+      </div>
+  </script>
+  
+
+<div id="container" class="container">
+  
+  <div>
+      <button id="front" class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-up"></button>
+  </div>
+  <div>
+
+      <button id='leftFront' class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-left", ></button>
+      <button id='stop' class="btn btn-lg btn-primary glyphicon glyphicon-stop"></button>
+      <button id='rightFront' class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-right"></button>
+  </div>
+  <div>
+      <button id='rear' class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-down"></button>
+  </div>
+
+ 
+
+
+
+</div>  
+    
+</section>
+ <!--footer section start-->
+ <br></br>
+ <br></br>
+ <br></br>
+ <br></br>
+ <br></br>
+
+ <footer class="dashboard">
+    <p> &copy; Spark team<a target="_blank" href="http://sc.chinaz.com/moban/"></a></p>
+  </footer>
+  <!--footer section end-->
+  <!-- move top -->
+  <button onclick="topFunction()" id="movetop" class="bg-primary" title="Go to top">
+    <span class="fa fa-angle-up"></span>
+  </button>
+  <script>
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () {
+      scrollFunction()
+    };
+  
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("movetop").style.display = "block";
+      } else {
+        document.getElementById("movetop").style.display = "none";
+      }
+    }
+  
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
+  <!-- /move top -->
+  
+  
+  <script src="assets/js/jquery-3.3.1.min.js"></script>
+  <script src="assets/js/jquery-1.10.2.min.js"></script>
+  
+  <!-- chart js -->
+  <script src="assets/js/Chart.min.js"></script>
+  <script src="assets/js/utils.js"></script>
+  
+  <!-- //chart js -->
+  
+  <!-- Different scripts of charts.  Ex.Barchart, Linechart -->
+  <script src="assets/js/bar.js"></script>
+  <script src="assets/js/linechart.js"></script>
+  <script src="assets/js/barh.js"></script>
+  <script src="assets/js/barc.js"></script>
+  <!-- //Different scripts of charts.  Ex.Barchart, Linechart -->
+  
+  
+  <script src="assets/js/jquery.nicescroll.js"></script>
+  <script src="assets/js/scripts.js"></script>
+  
+  <!-- close script -->
+  <script>
+    var closebtns = document.getElementsByClassName("close-grid");
+    var i;
+  
+    for (i = 0; i < closebtns.length; i++) {
+      closebtns[i].addEventListener("click", function () {
+        this.parentElement.style.display = 'none';
+      });
+    }
+  </script>
+  <!-- //close script -->
+  
+  <!-- disable body scroll when navbar is in active -->
+  <script>
+    $(function () {
+      $('.sidebar-menu-collapsed').click(function () {
+        $('body').toggleClass('noscroll');
+      })
+    });
+  </script>
+  <!-- disable body scroll when navbar is in active -->
+  
+   <!-- loading-gif Js -->
+   <script src="assets/js/modernizr.js"></script>
+   <script>
+       $(window).load(function () {
+           // Animate loader off screen
+           $(".se-pre-con").fadeOut("slow");;
+       });
+   </script>
+   <!--// loading-gif Js -->
+  
+  <!-- Bootstrap Core JavaScript -->
+  <script src="assets/js/bootstrap.min.js"></script>
+</body>
+</html>

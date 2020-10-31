@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>虫害信息测试</title>
+</head>
+<body>
+<h1>害虫信息<h1>
+    <div>
+        <table border = "1px">
+            <tr style="background: #ee0000">
+                <th>日期</th>
+                <th>PV</th>
+                <th>UV</th>
+            </tr>
+            {%  for row in data %}
+            <tr>
+                <th>{{ row[0] }}</th>
+                <th>{{ row[1] }}</th>
+                <th>{{ row[2] }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>>
+
+</body>
+</html>
